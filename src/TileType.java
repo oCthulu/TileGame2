@@ -1,4 +1,9 @@
 public class TileType extends AbstractTileType<TileType>{
+    public static final Triangle[][][] collisionLookup = {
+            {
+                    {new Triangle(0,0, 1,0, 1,0)}
+            }
+    };
     public final BackgroundTileType backgroundType;
 
     private TileType(TileRenderer<TileType> renderer, BackgroundTileType backgroundType) {

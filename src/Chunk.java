@@ -98,7 +98,7 @@ public class Chunk extends GameObject {
                 //toGlobalPosY(0) > Renderer.viewportTopEdge()
         ) return;
 
-        //rendering it in two separate loops for foreground and background is more efficient
+        //rendering it in two separate loops for foreground and background is more efficient (I think)
         //render background blocks
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int y = 0; y < CHUNK_SIZE; y++) {

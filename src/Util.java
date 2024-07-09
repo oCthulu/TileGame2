@@ -43,6 +43,13 @@ public class Util {
         return  trianglesIntersect(a.a(), a.b(), a.c(), b.a(), b.b(), b.c());
     }
 
+    public static boolean trianglesIntersect(Triangle a, Triangle[] tris){
+        for (Triangle tri : tris){
+            if(trianglesIntersect(a, tri)) return true;
+        }
+        return false;
+    }
+
     public static double invLerp(double a, double b, double t){
         return Math.clamp((t-a)/(b-a), 0, 1);
     }

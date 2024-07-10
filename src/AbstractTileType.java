@@ -4,7 +4,7 @@ import java.util.function.Predicate;
 public abstract class AbstractTileType<TSelf extends AbstractTileType<TSelf>> {
     public final TileRenderer<TSelf> renderer;
 
-    private static <TileTypeT extends AbstractTileType<?>> int getNeighborsBitfield(
+    public static <TileTypeT extends AbstractTileType<?>> int getNeighborsBitfield(
             Chunk.Tilemap<TileTypeT> tilemap,
             int localPosX,
             int localPosY,
@@ -18,7 +18,7 @@ public abstract class AbstractTileType<TSelf extends AbstractTileType<TSelf>> {
                 ((localPosX > 0                 )? (predicate.test(tilemap.getTile(localPosX-1, localPosY))? 1 : 0) : def) << 3;
     }
 
-    private static <TileTypeT extends AbstractTileType<?>> int getNeighborsBitfield(
+    public static <TileTypeT extends AbstractTileType<?>> int getNeighborsBitfield(
             Chunk.Tilemap<TileTypeT> tilemap,
             Vector2Int localPos,
             Predicate<TileTypeT> predicate,
@@ -27,12 +27,12 @@ public abstract class AbstractTileType<TSelf extends AbstractTileType<TSelf>> {
         return getNeighborsBitfield(tilemap, localPos.x, localPos.y, predicate, defaultIfEdgeCase);
     }
 
-    private static <TileTypeT extends AbstractTileType<?>> int getNeighborsBitfield(
+    public static <TileTypeT extends AbstractTileType<?>> int getNeighborsBitfield(
             Chunk.Tilemap<TileTypeT> tilemap,
             Vector2Int localPos,
             boolean defaultIfEdgeCase
     ) {
-        return getNeighborsBitfield(tilemap, localPos, Objects::isNull, defaultIfEdgeCase);
+        return getNeighborsBitfield(tilemap, localPos, Objects::nonNull, defaultIfEdgeCase);
     }
 
     public void render(Renderer r, Chunk.Tilemap<TSelf> tilemap, int localPosX, int localPosY){

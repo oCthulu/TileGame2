@@ -46,22 +46,23 @@ public class TileType extends AbstractTileType<TileType>{
             {
                     //0b0100
                     {new Triangle(O_CC, O_TL, O_TR)},
-                    {new Triangle(O_CC, O_BR, O_BL), new Triangle(O_CC, O_BR, O_BC)},
+                    {new Triangle(O_CC, O_TR, O_BR), new Triangle(O_CC, O_BR, O_BC)},
                     {},
                     {new Triangle(O_CC, O_BL, O_TL), new Triangle(O_CC, O_BC, O_BL)}
             },
             {
                     //0b0101
+                    {},
                     {new Triangle(O_CL, O_TL, O_TR), new Triangle(O_CL, O_TR, O_CR)},
                     {},
-                    {new Triangle(O_CL, O_CR, O_BR), new Triangle(O_CL, O_BR, O_BL)}
+                    {new Triangle(O_CL, O_CR, O_BR), new Triangle(O_CL, O_BR, O_BL)},
             },
             {
                     //0b0110
-                    {new Triangle(O_TR, O_TL, O_BR)},
+                    {new Triangle(O_TL, O_TR, O_BR)},
                     {},
                     {},
-                    {new Triangle(O_TR, O_BR, O_BL)}
+                    {new Triangle(O_TL, O_BR, O_BL)}
             },
             {
                     //0b0111
@@ -72,9 +73,9 @@ public class TileType extends AbstractTileType<TileType>{
             },
             {
                     //0b1000
-                    {new Triangle(O_CC, O_TL, O_TR), new Triangle(O_CC, O_CR, O_TR)},
+                    {new Triangle(O_CC, O_TL, O_TR), new Triangle(O_CC, O_CL, O_TL)},
                     {new Triangle(O_CC, O_TR, O_BR)},
-                    {new Triangle(O_CC, O_BR, O_BL), new Triangle(O_CC, O_BR, O_CR)},
+                    {new Triangle(O_CC, O_BR, O_BL), new Triangle(O_CC, O_BL, O_CL)},
                     {}
             },
             {
@@ -162,26 +163,29 @@ public class TileType extends AbstractTileType<TileType>{
 
         Vector2 newCenter = new Vector2(cCenter.x, cCenter.y);
 
+        int colIndex = getNeighborsBitfield(tilemap, localPos, false);
+
+        //in this case subtracting the player hitbox by gPos is the same as adding the gPos to the block collision
         //right face of block
-        if(Util.trianglesIntersect(bCenter, bTopRight, bBottomRight, cCenter, cBottomLeft, cTopLeft)){
+        if(Util.trianglesIntersect(new Triangle(cCenter, cBottomLeft, cTopLeft).sub(gPos), collisionLookup[colIndex][1])){
             newCenter = newCenter.withX(gPos.x + semiSize.x + 1);
             collider.onLeftCollide();
         }
 
         //left face of block
-        if(Util.trianglesIntersect(bCenter, bBottomLeft, bTopLeft, cCenter, cTopRight, cBottomRight)){
+        if(Util.trianglesIntersect(new Triangle(cCenter, cTopRight, cBottomRight).sub(gPos), collisionLookup[colIndex][3])){
             newCenter = newCenter.withX(gPos.x - semiSize.x);
             collider.onRightCollide();
         }
 
         //bottom face of block
-        if(Util.trianglesIntersect(bCenter, bBottomRight, bBottomLeft, cCenter, cTopLeft, cTopRight)){
+        if(Util.trianglesIntersect(new Triangle(cCenter, cTopLeft, cTopRight).sub(gPos), collisionLookup[colIndex][2])){
             newCenter = newCenter.withY(gPos.y + semiSize.y + 1);
             collider.onTopCollide();
         }
 
         //top face of block
-        if(Util.trianglesIntersect(bCenter, bTopLeft, bTopRight, cCenter, cBottomRight, cBottomLeft)){
+        if(Util.trianglesIntersect(new Triangle(cCenter, cBottomRight, cBottomLeft).sub(gPos), collisionLookup[colIndex][0])){
             newCenter = newCenter.withY(gPos.y - semiSize.y);
             collider.onBottomCollide();
         }

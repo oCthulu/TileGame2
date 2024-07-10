@@ -190,6 +190,30 @@ public class TileType extends AbstractTileType<TileType>{
             collider.onBottomCollide();
         }
 
+//        right face of block
+//        if(Util.trianglesIntersect(bCenter, bTopRight, bBottomRight, cCenter, cBottomLeft, cTopLeft)){
+//            newCenter = newCenter.withX(gPos.x + semiSize.x + 1);
+//            collider.onLeftCollide();
+//        }
+//
+//        //left face of block
+//        if(Util.trianglesIntersect(bCenter, bBottomLeft, bTopLeft, cCenter, cTopRight, cBottomRight)){
+//            newCenter = newCenter.withX(gPos.x - semiSize.x);
+//            collider.onRightCollide();
+//        }
+//
+//        //bottom face of block
+//        if(Util.trianglesIntersect(bCenter, bBottomRight, bBottomLeft, cCenter, cTopLeft, cTopRight)){
+//            newCenter = newCenter.withY(gPos.y + semiSize.y + 1);
+//            collider.onTopCollide();
+//        }
+//
+//        //top face of block
+//        if(Util.trianglesIntersect(bCenter, bTopLeft, bTopRight, cCenter, cBottomRight, cBottomLeft)){
+//            newCenter = newCenter.withY(gPos.y - semiSize.y);
+//            collider.onBottomCollide();
+//        }
+
         collider.setCenter(newCenter);
     }
 }

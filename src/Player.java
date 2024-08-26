@@ -2,7 +2,6 @@ public class Player extends GameObject{
     public static Player instance;
     private static final double ZOOM_SPEED = 0.03;
 
-    public double zoom = 0.03;
     public double speed = 15;
     public double terminalVelocity = 30;
     public double jumpPower = 10;
@@ -12,6 +11,7 @@ public class Player extends GameObject{
     public Vector2 velocity = new Vector2(0, 0);
 
     private boolean isGrounded = false;
+    private double zoom = 0.03;
 
     private final Collider collider = new Collider() {
         @Override
@@ -43,6 +43,17 @@ public class Player extends GameObject{
 
     public Player(){
         instance = this;
+    }
+
+    public double getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(double zoom) {
+        double prevZoom = this.zoom;
+        this.zoom = zoom;
+        //if the zoom has changed ensure onRescaled is invoked
+        if(prevZoom != zoom) Main.setRescaled();
     }
 
     @Override
@@ -81,13 +92,13 @@ public class Player extends GameObject{
         }
 
         if(Input.zoomIn.isDown()){
-            zoom += ZOOM_SPEED * Main.getDeltaTime();
+            setZoom(getZoom() + ZOOM_SPEED * Main.getDeltaTime());
         }
 
         if(Input.zoomOut.isDown()){
-            zoom -= ZOOM_SPEED * Main.getDeltaTime();
+            setZoom(getZoom() - ZOOM_SPEED * Main.getDeltaTime());
         }
 
-        zoom = Math.max(zoom, 0.001);
+        setZoom(Math.max(getZoom(), 0.001));
     }
 }

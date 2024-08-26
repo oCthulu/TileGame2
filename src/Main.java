@@ -1,25 +1,40 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class Main {
     public static final double MAX_DELTA_TIME = (1/15d);
     public static final RunnableEvent onUpdate = new RunnableEvent();
     public static final RunnableEvent onPreUpdate = new RunnableEvent();
+    /**
+     * Ran whenever blocks are rescaled in any way (e.g. zooming, changing resolutions)
+     * This is always executed between tick and render
+     */
+    public static final RunnableEvent onRescale = new RunnableEvent();
+
     private static JFrame window;
     private static GameCanvas canvas;
-
     private static long timePrev;
     private static double deltaTime;
     private static long currentTime;
+    private static boolean rescaledSinceLastTick;
 
     public static void main(String[] args) {
-        //System.setProperty("sun.java2d.opengl", "true");
+        System.setProperty("sun.java2d.opengl", "true");
 
         window = new JFrame();
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(500, 500);
         window.setTitle("2D Tile Game");
         window.setVisible(true);
+
+        window.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                setRescaled();
+            }
+        });
 
         canvas = new GameCanvas(window);
 
@@ -29,11 +44,17 @@ public class Main {
         //update object list to include initial objects
         GameObject.updateObjectList();
 
+        onRescale.invoke();
+
         mainLoop();
     }
 
     private static void mainLoop(){
         update();
+        if(rescaledSinceLastTick){
+            onRescale.invoke();
+            rescaledSinceLastTick = false;
+        }
         render();
 
         EventQueue.invokeLater(Main::mainLoop);
@@ -97,5 +118,9 @@ public class Main {
 
     public static GameCanvas getCanvas(){
         return canvas;
+    }
+
+    public static void setRescaled(){
+        rescaledSinceLastTick = true;
     }
 }

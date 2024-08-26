@@ -178,10 +178,10 @@ public class TileType extends AbstractTileType<TileType>{
             },
             {
                     //0b1010
-                    {},
                     {new Triangle(O_BC, O_TR, O_BR), new Triangle(O_BC, O_TC, O_TR)},
                     {},
-                    {new Triangle(O_BC, O_BR, O_TR), new Triangle(O_BC, O_TR, O_TC)}
+                    {new Triangle(O_BC, O_BR, O_TR), new Triangle(O_BC, O_TR, O_TC)},
+                    {}
             },
             {
                     //0b1011

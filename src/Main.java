@@ -21,7 +21,8 @@ public class Main {
     private static boolean rescaledSinceLastTick;
 
     public static void main(String[] args) {
-        System.setProperty("sun.java2d.opengl", "true");
+        //System.setProperty("sun.java2d.opengl", "true");
+        //System.setProperty("sun.java2d.d3d", "true");
 
         window = new JFrame();
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -46,7 +47,10 @@ public class Main {
 
         onRescale.invoke();
 
-        mainLoop();
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            mainLoop();
+        }
     }
 
     private static void mainLoop(){
@@ -57,7 +61,7 @@ public class Main {
         }
         render();
 
-        EventQueue.invokeLater(Main::mainLoop);
+        //EventQueue.invokeLater(Main::mainLoop);
     }
 
     private static void update(){

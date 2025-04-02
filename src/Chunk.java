@@ -93,9 +93,9 @@ public class Chunk extends GameObject {
     public void render(Renderer r) {
         if(
                 toGlobalPosX(CHUNK_SIZE) < Renderer.viewportLeftEdge() ||
-                toGlobalPosX(0) > Renderer.viewportRightEdge()
-                //toGlobalPosY(CHUNK_SIZE) < Renderer.viewportBottomEdge()// ||
-                //toGlobalPosY(0) > Renderer.viewportTopEdge()
+                toGlobalPosX(0) > Renderer.viewportRightEdge() ||
+                toGlobalPosY(CHUNK_SIZE) < Renderer.viewportTopEdge() ||
+                toGlobalPosY(0) > Renderer.viewportBottomEdge()
         ) return;
 
         //rendering it in two separate loops for foreground and background is more efficient (I think)

@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 
 public class Main {
     public static final double MAX_DELTA_TIME = (1/15d);
@@ -18,17 +17,19 @@ public class Main {
     private static long timePrev;
     private static double deltaTime;
     private static long currentTime;
+
     private static boolean rescaledSinceLastTick;
+    private static boolean terminateOnNextTick;
 
     public static void main(String[] args) {
         //System.setProperty("sun.java2d.opengl", "true");
         //System.setProperty("sun.java2d.d3d", "true");
 
         window = new JFrame();
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(500, 500);
         window.setTitle("2D Tile Game");
         window.setVisible(true);
+        window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         window.addComponentListener(new ComponentAdapter() {
             @Override
@@ -36,6 +37,16 @@ public class Main {
                 setRescaled();
             }
         });
+
+        window.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                terminateOnNextTick = true;
+            }
+        });
+
+        //i couldn't get window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE) to
+        //work for some reason. i just used the terminateOnNextTick variable instead.
 
         canvas = new GameCanvas(window);
 
@@ -47,8 +58,8 @@ public class Main {
 
         onRescale.invoke();
 
-        //noinspection InfiniteLoopStatement
-        while (true) {
+        //if the program should not be terminated, keep updating it
+        while (!terminateOnNextTick) {
             mainLoop();
         }
     }

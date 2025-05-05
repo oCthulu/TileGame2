@@ -8,7 +8,6 @@ import java.security.InvalidParameterException;
 public class ConstantImageTileRenderer<TileTypeT extends AbstractTileType<?>> extends TileRenderer<TileTypeT> {
     private final Image baseImage;
 
-    //to ensure there are no seams, 4 scaled images are cached, each off by 1 pixel
     private Image scaled;
 
     public ConstantImageTileRenderer(Image image){
@@ -30,12 +29,14 @@ public class ConstantImageTileRenderer<TileTypeT extends AbstractTileType<?>> ex
 
     @Override
     public void render(Renderer r, Chunk.Tilemap<TileTypeT> tilemap, int localPosX, int localPosY) {
-//        r.drawImageWorldSpace(
-//                baseImage,
-//                tilemap.getChunk().toGlobalPosX(localPosX),
-//                tilemap.getChunk().toGlobalPosY(localPosY),
-//                1,1
-//        );
+        //this is how something like rendering these blocks would typically be done in the codebase,
+        //but I had to change it for efficiency
+        //r.drawImageWorldSpace(
+        //        baseImage,
+        //        tilemap.getChunk().toGlobalPosX(localPosX),
+        //        tilemap.getChunk().toGlobalPosY(localPosY),
+        //        1,1
+        //);
 
         int globalX = tilemap.getChunk().toGlobalPosX(localPosX);
         int globalY = tilemap.getChunk().toGlobalPosY(localPosY);

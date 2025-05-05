@@ -1,6 +1,10 @@
 import java.util.Objects;
 import java.util.function.Predicate;
 
+//the complex class definition here (i.e. "TSelf extends AbstractTileType<TSelf>") is just
+//to ensure the tile knows its own type.
+//that is, TSelf will be ForegroundTileType if this is an instance of ForegroundTileType and
+//BackgroundTileType if this is an instance of BackgroundTileType (same goes for TileTypeT)
 public abstract class AbstractTileType<TSelf extends AbstractTileType<TSelf>> {
     public final TileRenderer<TSelf> renderer;
 

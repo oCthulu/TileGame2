@@ -7,7 +7,7 @@ public record Renderer(Graphics2D graphics) {
         //return world.scale(Player.instance.zoom * Main.getHeight());
     }
     public static double worldToScreenVectorComponent(double val){
-        return val * Player.instance.zoom * Main.getHeight();
+        return val * Player.instance.getZoom() * Main.getHeight();
     }
 
     public static Vector2 worldToScreenPos(Vector2 world) {
@@ -29,7 +29,7 @@ public record Renderer(Graphics2D graphics) {
         //return world.scale(Player.instance.zoom * Main.getHeight());
     }
     public static double screenToWorldVectorComponent(double val){
-        return val / (Player.instance.zoom * Main.getHeight());
+        return val / (Player.instance.getZoom() * Main.getHeight());
     }
 
     public static Vector2 screenToWorldPos(Vector2 screen) {

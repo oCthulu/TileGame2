@@ -1,0 +1,8 @@
+# APCSA project
+This is a codebase designed for educators teaching AP Computer Science A to use. Since most APCSA projects involve coding something from scratch (for lack of a codebase to integrate changes into), the intent is to provide teachers with a codebase that students can make changes to so that they can gain experience integrating features into an existing codebase as opposed to coding something from scratch.
+## The codebase
+The codebase is a primitive version of a Terraria-type game (i.e. a 2D side-view block game). We have found that the fact it is a game makes students far more engaged with the project (since most students are far more interested in videogames than say, sorting algorithms), with many genuinely enjoying working on it.
+### Features
+The codebase has enough features to serve as a strong foundation for students seeking to implement their own. We focused on implementing the features which would be too complex for the APCSA curriculum (such as rendering and collision), leaving some more basic features absent (such as the ability to place blocks) so that the students can implement them themselves. That being said, we have included enough basic features, such as the ability to break blocks, that students have examples to learn from.
+### Complexity
+While the codebase includes a few features outside the APCSA curriculum, such as generic types and abstract classes, the codebase should be generally understandable for the average APCSA student. We have also left the codebase in a somewhat "raw" state to make it more realistic.
